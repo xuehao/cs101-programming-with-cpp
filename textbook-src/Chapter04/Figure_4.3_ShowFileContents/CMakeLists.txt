@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.20)
+
+# Set project information
+project(
+  ShowFileContents
+  VERSION 1.0
+  DESCRIPTION "Program to show the contents of a file"
+  LANGUAGES CXX)
+
+# Add an executable target
+add_executable(${PROJECT_NAME})
+
+# Define Cxx standard
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_11)
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
+
+# Add source files
+file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
+     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE RESOURCE_FILES CONFIGURE_DEPENDS
+     ${CMAKE_CURRENT_SOURCE_DIR}/*.txt)
+target_sources(${PROJECT_NAME} PRIVATE ${SOURCE_FILES} ${RESOURCE_FILES})
+
+# Copy resource files
+file(COPY ${RESOURCE_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
